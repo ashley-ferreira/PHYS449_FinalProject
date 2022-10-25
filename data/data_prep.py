@@ -20,8 +20,8 @@ import os, sys #Run the command line input for .sh file
 from tqdm import tqdm #add completion bar to code
 import imageio as iio #use to save to jpg
 import cv2 #use to open jpg
-#import torch #use to save data in tensor
-#from torch.utils.data import TensorDataset, DataLoader #use to save data in tensor
+import torch #use to save data in tensor
+from torch.utils.data import TensorDataset, DataLoader #use to save data in tensor
 #-----------------------------------------------------------
 
 
@@ -125,19 +125,29 @@ for ii in range(np.shape(Nair_label)[0]):
 
 
 #-----------------------------------------------------------
-#ACCESS THE AUGMENTED DATA AND PUT IT IN PYTORCH TENSOR:
+#ACCESS THE AUGMENTED DATA:
 directory = 'Data_g_band_augmented'
+count = 0
 for filename in tqdm(os.listdir(directory)):
     f = os.path.join(directory, filename)
+    #load the file
     img_3_layers = cv2.imread(f)
-    #print(np.shape(img_3_layers))
-    torch.Tensor(img_3_layers[:,:,0])
 
-#tensor_input = torch.Tensor(input)
-#tensor_label = torch.Tensor(label_array)
+    #3 input (g band image) in file:
+    input1 = img_3_layers[:,:,0]
+    input2 = img_3_layers[:,:,1]
+    input3 = img_3_layers[:,:,2]
+    
+    #get the corresponding 3 labels:
+    index_label = int(filename[0])
+    
+    label1 = Cavanach_label[index_label]
+    label2 = Cavanach_label[index_label+1]
+    label3 = Cavanach_label[index_label+2]
 
-#dataset = TensorDataset(tensor_input,tensor_label) #create dataset
-#dataloader = DataLoader(dataset, batch_size=128) #use dataloader
+#CAN NOW LOAD THE DATA AND PROCESS IT
+#OPENING AND FINDING THE FILE LABEL FOR ALL FILES TAKES ~ 13 minutes
+#WILL SAVE AS A DIFFERENT FORMAT TO ACCESS IN BATCHES WITH PYTORCH LATER  
 #-----------------------------------------------------------
 
 
