@@ -34,7 +34,6 @@ def Alex(input_shape, unique_labels=2, dropout_rate=0.5):
     model.add(Dense(4096, activation='sigmoid'))
     model.add(Dropout(dropout_rate))
 
-    # need to confirm activation here and in layers above
     model.add(Dense(unique_labels, activation='softmax')) 
 
     return model

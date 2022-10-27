@@ -34,7 +34,6 @@ def Diel(input_shape, unique_labels=2, dropout_rate=0.5):
     model.add(Dense(256, activation='sigmoid'))
     model.add(Dense(256, activation='sigmoid'))
 
-    # need to confirm activation here and in layers above
     model.add(Dense(unique_labels, activation='softmax')) 
 
     return model
