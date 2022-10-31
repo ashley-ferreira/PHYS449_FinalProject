@@ -11,4 +11,4 @@ Development notes from Ashley:
 - hyperparams: categorical cross-entropy loss function to be used for all CNNs, adam optimizer and learning rate of  2 × 10^−4 on their network for sure and I don't think they have any learning rate decay or additional regularization beyond dropout. early stopping was used and batch size is described like "Training was conducted over a maximum of 100 epochs with a batch size of 400 for 100 × 100 data, and a reduced batch size of 200 for the 200 × 200 data due to memory limitations"
 - Not noted in diagram but I belive they have added batch normalization layers so I will pop those in too
 - Fix dense layer activations
-- Adam only used for C2
+- Adam only used for C2, Adadelta used for others (adaptive learning rate)
