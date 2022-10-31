@@ -30,8 +30,8 @@ def Alex(input_shape, unique_labels=2, dropout_rate=0.5):
 
     model.add(Flatten())
     model.add(Dropout(dropout_rate))
-    model.add(Dense(4096, activation='sigmoid'))
-    model.add(Dense(4096, activation='sigmoid'))
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dense(4096, activation='relu'))
     model.add(Dropout(dropout_rate))
 
     model.add(Dense(unique_labels, activation='softmax')) 
