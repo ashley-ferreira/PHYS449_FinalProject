@@ -1,8 +1,7 @@
 # PHYS449_FinalProject
 Replicating machine learning results from paper: https://academic.oup.com/mnras/article/506/1/659/6291200
 
-Google drive: https://drive.google.com/drive/folders/1199S9kkTg9Qf7ZIUdW3EBEGS5hGc8MgG?usp=sharing
-
+Link to final presenation: https://docs.google.com/presentation/d/1vw_8BbDLDMyIZf-GEiGgTHhTvtZi8xpYM10-5VsCY60/edit?usp=sharing
 
 Development notes from Ashley:
 - I've implimented the basic skeleton for all 4 CNNs mentioned in the paper
