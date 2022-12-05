@@ -19,7 +19,9 @@ def C1(input_shape, unique_labels=2, dropout_rate=0.5):
     model = Sequential()
 
     model.add(Conv2D(filters=32, input_shape=input_shape, activation='relu', kernel_size=(5,5)))
+    model.add(BatchNormalization())
     model.add(Conv2D(filters=64, input_shape=input_shape, activation='relu', kernel_size=(5,5)))
+    model.add(BatchNormalization())
     model.add(MaxPool2D(pool_size=(2, 2)))
 
     model.add(Flatten())
