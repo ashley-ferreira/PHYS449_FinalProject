@@ -18,11 +18,6 @@ from torch.utils.data import Dataset, DataLoader
 
 # connect to w&b for experiment tracking
 #wandb.init(project="CNN-4way-C1-subset", entity="449-final project")\
-
-tst = torch.cuda.device(0)
-
-print(torch.cuda.get_device_name(tst))
-
 # need to double check but this is roughly right
 networkc1 = nn.Sequential(
     nn.Conv2d(in_channels=1, out_channels=32, kernel_size=5, stride=3, padding=0),
