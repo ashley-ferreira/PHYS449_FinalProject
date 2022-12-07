@@ -1,37 +1,42 @@
+
+
 #-----------------------------------------------------
-#Pytorch C1 
+#PyTorch C1 
 #Dec. 6, 2022
 #Train Pytorch Model for C1 Architecture on
 #4 way classification for fully augmented data.
-#Note: Requires High Ammount of GPU
+#IMPORTANT note: To Run the full dataset a considerable amount of VRAM is needed
+# Google Collab used a Nvidia A100 GPU which has 40gb of VRAM
 #-----------------------------------------------------
 
 
 #-----------------------------------------------------
 #IMPORT MODULES
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-from tqdm import tqdm
-import os
 import torch
 from torch import nn
-import torch.nn.functional as F
-from torch.utils.data import Dataset, DataLoader
 #-----------------------------------------------------
+
+## Call these to ensure 
+sys.path.insert(0, 'PHYS449_FinalProject/Data')
+sys.path.insert(1, 'PHYS449_FinalProject/Networks')
 
 #-----------------------------------------------------
 #IMPORT DEFINED FUNCTIONS:
-from PHYS449_FinalProject.Data  import PyTorch_Data_Loading
+from PyTorch_Data_Loading import data_batch
 
-from PHYS449_FinalProject.Networks import PyTorch_C1_net
+
+from PyTorch_C1_net import networkc1 
 #-----------------------------------------------------
 
 #DEFINE NETWORK HYPERPARAMETERS FOR TRAINING:
 num_classes = 4 #Number of classes for the model
 num_images = 50 #number of different galaxy images per augmented batch.
 n_epochs = 12
-cn_model = PyTorch_C1_net.networkc1
+cn_model = networkc1
 optimizer = torch.optim.Adam(cn_model.parameters(), lr=2e-4)
 
 # define things that are the same for both notebooks
@@ -39,14 +44,14 @@ optimizer = torch.optim.Adam(cn_model.parameters(), lr=2e-4)
 #loss_fn = torch.nn.CrossEntropyLoss(weight = class_weight)
 loss_fn = torch.nn.CrossEntropyLoss()
 
-cn_model.to('cuda') #Move network to GPU
+cn_model.to('cpu') #Move network to GPU
 #-----------------------------------------------------
 
 
 #-----------------------------------------------------
 #DEFINE TRAINING AND TESTING SETS:
 #Train and test set
-dataset_size = int(14034/num_images)
+dataset_size = int(1403/num_images)
 train_split = 0.85
 test_split = 1 - train_split
 split_cutoff = int(dataset_size*train_split)
@@ -81,7 +86,7 @@ for epoch in range(n_epochs):
         test_total_accuracy = 0
         with torch.no_grad():
           for ii in range(np.shape(rand_test)[0]):
-            im_valid, y_valid = PyTorch_Data_Loading.data_batch(datafile_index=num_images*rand_test[ii], num_images=num_images)
+            im_valid, y_valid = data_batch(datafile_index=num_images*rand_test[ii], num_images=num_images)
             im_valid = im_valid.reshape(100, 100, 1, im_valid.shape[2])
             im_valid = im_valid.T
 
@@ -89,8 +94,8 @@ for epoch in range(n_epochs):
             #plt.imshow(im_valid[0,0,:,:])
             #plt.show()
 
-            im_valid = im_valid.detach().to('cuda')
-            y_valid = y_valid.detach().to('cuda')
+            im_valid = im_valid.detach().to('cpu')
+            y_valid = y_valid.detach().to('cpu')
 
             y_pred_valid = cn_model(im_valid)
             y_pred_valid_cat = nn.functional.softmax(y_pred_valid, dim=1)
@@ -134,7 +139,7 @@ for epoch in range(n_epochs):
       optimizer.zero_grad() #reset the gradients (Added)
 
       #print('batch', ii+1, '/', batch_size)
-      im2, y = PyTorch_Data_Loading.data_batch(datafile_index=num_images*rand_train[ii], num_images=num_images)
+      im2, y = data_batch(datafile_index=num_images*rand_train[ii], num_images=num_images)
 
       # reshaping im to what we want (can do this as data output too)
       im2 = im2.reshape(100, 100, 1, im2.shape[2])
@@ -143,8 +148,8 @@ for epoch in range(n_epochs):
       del im2
       #torch.cuda.empty_cache()
 
-      im = im.detach().to('cuda')
-      y = y.detach().to('cuda')
+      im = im.detach().to('cpu')
+      y = y.detach().to('cpu')
 
       y_pred = cn_model(im)
       y_pred_cat = nn.functional.softmax(y_pred, dim=1)
@@ -195,12 +200,12 @@ for epoch in range(n_epochs):
     test_total_accuracy = 0
     with torch.no_grad():
       for ii in range(np.shape(rand_test)[0]):
-        im_valid, y_valid = PyTorch_Data_Loading.data_batch(datafile_index=num_images*rand_test[ii], num_images=num_images)
+        im_valid, y_valid = data_batch(datafile_index=num_images*rand_test[ii], num_images=num_images)
         im_valid = im_valid.reshape(100, 100, 1, im_valid.shape[2])
         im_valid = im_valid.T
 
-        im_valid = im_valid.detach().to('cuda')
-        y_valid = y_valid.detach().to('cuda')
+        im_valid = im_valid.detach().to('cpu')
+        y_valid = y_valid.detach().to('cpu')
 
         y_pred_valid = cn_model(im_valid)
         y_pred_valid_cat = nn.functional.softmax(y_pred_valid, dim=1)
