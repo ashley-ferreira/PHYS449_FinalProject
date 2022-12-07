@@ -16,8 +16,8 @@ from torch import nn
 #-----------------------------------------------------
 
 ## Call these to ensure PyTorch_Data_Loading and PyTorch_C1_net files can be called
-sys.path.insert(0, 'PHYS449_FinalProject/Data')
-sys.path.insert(1, 'PHYS449_FinalProject/Networks')
+sys.path.insert(0, 'Data')
+sys.path.insert(1, 'Networks')
 
 #-----------------------------------------------------
 #IMPORT DEFINED FUNCTIONS:
