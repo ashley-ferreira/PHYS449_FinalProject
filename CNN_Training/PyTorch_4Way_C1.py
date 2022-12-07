@@ -1,12 +1,11 @@
-
-
 #-----------------------------------------------------
 #PyTorch C1 
 #Dec. 6, 2022
-#Train Pytorch Model for C1 Architecture on
+#Train Pytorch Model for C1 Architecture
 #4 way classification for fully augmented data.
 #IMPORTANT note: To Run the full dataset a considerable amount of VRAM is needed
-# Google Collab used a Nvidia A100 GPU which has 40gb of VRAM
+# Google Collab pro used a Nvidia A100 GPU which has 40gb of VRAM. 
+# This file is running on a CPU for a very small dataset.
 #-----------------------------------------------------
 
 
@@ -20,7 +19,7 @@ import torch
 from torch import nn
 #-----------------------------------------------------
 
-## Call these to ensure 
+## Call these to ensure PyTorch_Data_Loading and PyTorch_C1_net files can be called
 sys.path.insert(0, 'PHYS449_FinalProject/Data')
 sys.path.insert(1, 'PHYS449_FinalProject/Networks')
 
@@ -34,8 +33,8 @@ from PyTorch_C1_net import networkc1
 
 #DEFINE NETWORK HYPERPARAMETERS FOR TRAINING:
 num_classes = 4 #Number of classes for the model
-num_images = 50 #number of different galaxy images per augmented batch.
-n_epochs = 12
+num_images = 5 #number of different galaxy images per augmented batch.
+n_epochs = 5
 cn_model = networkc1
 optimizer = torch.optim.Adam(cn_model.parameters(), lr=2e-4)
 
@@ -51,7 +50,7 @@ cn_model.to('cpu') #Move network to GPU
 #-----------------------------------------------------
 #DEFINE TRAINING AND TESTING SETS:
 #Train and test set
-dataset_size = int(1403/num_images)
+dataset_size = int(10/num_images)
 train_split = 0.85
 test_split = 1 - train_split
 split_cutoff = int(dataset_size*train_split)
@@ -269,7 +268,7 @@ plt.xlim(0, np.shape(train_acc)[0]-1) #set axis limits
 plt.grid(True, which='minor', color='gray', linestyle='--', linewidth=1, alpha=0.2) #set gridlines
 plt.grid(True, which='major', color='gray', linestyle='-', linewidth=1, alpha=0.5) #set gridlines
 plt.tight_layout()
-plt.savefig('results/plots/C1_4way_Full_Augmentation_Accuracy_plot.png',dpi=300)
+plt.savefig('PHYS449_FinalProject/results/plots/C1_4way_Full_Augmentation_Accuracy_plot.png',dpi=300)
 plt.close() #Stops the figure from being shown
 #plt.show() #display the figure
 
@@ -294,13 +293,13 @@ plt.grid(True, which='minor', color='gray', linestyle='--', linewidth=1, alpha=0
 plt.grid(True, which='major', color='gray', linestyle='-', linewidth=1, alpha=0.5) #set gridlines
 plt.tight_layout()
 #plt.yscale('log')
-plt.savefig('results/plots/C1_4way_Full_Augmentation_Loss_plot.png',dpi=300)
+plt.savefig('PHYS449_FinalProject/results/plots/C1_4way_Full_Augmentation_Loss_plot.png',dpi=300)
 plt.close() #Stops the figure from being shown
 #plt.show() #display the figure
 
 
 #Save the pytorch model:
-torch.save(cn_model.state_dict(), 'results/models/C1_4way_Full_Augmentation_model')
+torch.save(cn_model.state_dict(), 'PHYS449_FinalProject/results/models/C1_4way_Full_Augmentation_model')
 
 #-----------------------------------------------------
 

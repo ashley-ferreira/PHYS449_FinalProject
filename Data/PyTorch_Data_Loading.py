@@ -10,7 +10,7 @@ import torch
 ##drive.mount('/content/drive')
 
 #LOAD THE DATA FROM TXT FILE INTO A BATCH:
-def data_batch(datafile_index, num_images=10,  data_file='data_g_band_v2.txt', plotting=False):
+def data_batch(datafile_index, num_images=10,  data_file='PHYS449_FinalProject/Data/data_g_band_v2.txt', plotting=False):
     '''
     Description:
         Access datafile.txt, each row is flattened 110x110 image + 1 label string (E, Sp, S0, Irr+Misc).
@@ -93,7 +93,5 @@ def data_batch(datafile_index, num_images=10,  data_file='data_g_band_v2.txt', p
     #PUT THE DATA AS A PYTORCH TENSOR:
     tensor_input_batch_aug = torch.Tensor(input_batch_aug)
     tensor_label_batch_aug = torch.Tensor(arr_label_batch_aug)
-
-    print(f.read())
     
     return tensor_input_batch_aug, tensor_label_batch_aug

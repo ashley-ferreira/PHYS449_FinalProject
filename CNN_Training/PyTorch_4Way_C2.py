@@ -6,45 +6,45 @@
 #Note: Requires High Ammount of GPU
 #-----------------------------------------------------
 
-
-
 #-----------------------------------------------------
 #IMPORT MODULES
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-from tqdm import tqdm
-import os
 import torch
 from torch import nn
-import torch.nn.functional as F
-from torch.utils.data import Dataset, DataLoader
 #-----------------------------------------------------
+
+## Call these to ensure PyTorch_Data_Loading and PyTorch_C1_net files can be called
+sys.path.insert(0, 'PHYS449_FinalProject/Data')
+sys.path.insert(1, 'PHYS449_FinalProject/Networks')
 
 #-----------------------------------------------------
 #IMPORT DEFINED FUNCTIONS:
-from PHYS449_FinalProject.Data  import PyTorch_Data_Loading
+from PyTorch_Data_Loading import data_batch
 
-from PHYS449_FinalProject.Networks import PyTorch_C1_net, PyTorch_C2_net
+
+from PyTorch_C2_net import networkc2
 #-----------------------------------------------------
 
+
 num_classes = 4 #Number of classes for the model
-num_images = 150 #number of different galaxy images per augmented batch.
-n_epochs = 20
-cn_model = PyTorch_C2_net.networkc2
+num_images = 5 #number of different galaxy images per augmented batch.
+n_epochs = 5
+cn_model = networkc2
 lr = 2*pow(10,-4)
 optimizer = torch.optim.Adam(cn_model.parameters(), lr=lr)
 
 loss_fn = torch.nn.CrossEntropyLoss()
 
-cn_model.to('cuda') #Move network to GPU
+cn_model.to('cpu') #Change to 'cpu' to 'cuda' if running network on a GPU
 #-----------------------------------------------------
 
 
 #-----------------------------------------------------
 #DEFINE TRAINING AND TESTING SETS:
 #Train and test set
-dataset_size = int(14034/num_images)
+dataset_size = int(10/num_images)
 train_split = 0.85
 test_split = 1 - train_split
 split_cutoff = int(dataset_size*train_split)
@@ -79,7 +79,7 @@ for epoch in range(n_epochs):
         test_total_accuracy = 0
         with torch.no_grad():
           for ii in range(np.shape(rand_test)[0]):
-            im_valid, y_valid = PyTorch_Data_Loading.data_batch(datafile_index=num_images*rand_test[ii], num_images=num_images)
+            im_valid, y_valid = data_batch(datafile_index=num_images*rand_test[ii], num_images=num_images)
             im_valid = im_valid.reshape(100, 100, 1, im_valid.shape[2])
             im_valid = im_valid.T
 
@@ -87,8 +87,8 @@ for epoch in range(n_epochs):
             #plt.imshow(im_valid[0,0,:,:])
             #plt.show()
 
-            im_valid = im_valid.detach().to('cuda')
-            y_valid = y_valid.detach().to('cuda')
+            im_valid = im_valid.detach().to('cpu') #Change to 'cpu' to 'cuda' if running network on a GPU
+            y_valid = y_valid.detach().to('cpu') #Change to 'cpu' to 'cuda' if running network on a GPU
 
             y_pred_valid = cn_model(im_valid)
             y_pred_valid_cat = nn.functional.softmax(y_pred_valid, dim=1)
@@ -132,7 +132,7 @@ for epoch in range(n_epochs):
       optimizer.zero_grad() #reset the gradients (Added)
 
       #print('batch', ii+1, '/', batch_size)
-      im2, y = PyTorch_Data_Loading.data_batch(datafile_index=num_images*rand_train[ii], num_images=num_images)
+      im2, y = data_batch(datafile_index=num_images*rand_train[ii], num_images=num_images)
 
       # reshaping im to what we want (can do this as data output too)
       im2 = im2.reshape(100, 100, 1, im2.shape[2])
@@ -141,8 +141,8 @@ for epoch in range(n_epochs):
       del im2
       #torch.cuda.empty_cache()
 
-      im = im.detach().to('cuda')
-      y = y.detach().to('cuda')
+      im = im.detach().to('cpu') #Change to 'cpu' to 'cuda' if running network on a GPU
+      y = y.detach().to('cpu') #Change to 'cpu' to 'cuda' if running network on a GPU
 
       y_pred = cn_model(im)
       y_pred_cat = nn.functional.softmax(y_pred, dim=1)
@@ -193,12 +193,12 @@ for epoch in range(n_epochs):
     test_total_accuracy = 0
     with torch.no_grad():
       for ii in range(np.shape(rand_test)[0]):
-        im_valid, y_valid = PyTorch_Data_Loading.data_batch(datafile_index=num_images*rand_test[ii], num_images=num_images)
+        im_valid, y_valid = data_batch(datafile_index=num_images*rand_test[ii], num_images=num_images)
         im_valid = im_valid.reshape(100, 100, 1, im_valid.shape[2])
         im_valid = im_valid.T
 
-        im_valid = im_valid.detach().to('cuda')
-        y_valid = y_valid.detach().to('cuda')
+        im_valid = im_valid.detach().to('cpu') #Change to 'cpu' to 'cuda' if running network on a GPU
+        y_valid = y_valid.detach().to('cpu') #Change to 'cpu' to 'cuda' if running network on a GPU
 
         y_pred_valid = cn_model(im_valid)
         y_pred_valid_cat = nn.functional.softmax(y_pred_valid, dim=1)
@@ -262,7 +262,7 @@ plt.xlim(0, np.shape(train_acc)[0]-1) #set axis limits
 plt.grid(True, which='minor', color='gray', linestyle='--', linewidth=1, alpha=0.2) #set gridlines
 plt.grid(True, which='major', color='gray', linestyle='-', linewidth=1, alpha=0.5) #set gridlines
 plt.tight_layout()
-plt.savefig('results/plots/C2_4way_Full_Augmentation_Accuracy_plot.png',dpi=300)
+plt.savefig('PHYS449_FinalProject/results/plots/C2_4way_Full_Augmentation_Accuracy_plot.png',dpi=300)
 plt.close() #Stops the figure from being shown
 #plt.show() #display the figure
 
@@ -287,12 +287,12 @@ plt.grid(True, which='minor', color='gray', linestyle='--', linewidth=1, alpha=0
 plt.grid(True, which='major', color='gray', linestyle='-', linewidth=1, alpha=0.5) #set gridlines
 plt.tight_layout()
 #plt.yscale('log')
-plt.savefig('results/plots/C2_4way_Full_Augmentation_Loss_plot.png',dpi=300)
+plt.savefig('PHYS449_FinalProject/results/plots/C2_4way_Full_Augmentation_Loss_plot.png',dpi=300)
 plt.close() #Stops the figure from being shown
 #plt.show() #display the figure
 
 
 #Save the pytorch model:
-torch.save(cn_model.state_dict(), 'results/models/C2_4way_Full_Augmentation_model')
+torch.save(cn_model.state_dict(), 'PHYS449_FinalProject/results/models/C2_4way_Full_Augmentation_model')
 
 #-----------------------------------------------------
