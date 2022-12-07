@@ -33,8 +33,9 @@ from PyTorch_C1_net import networkc1
 
 #DEFINE NETWORK HYPERPARAMETERS FOR TRAINING:
 num_classes = 4 #Number of classes for the model
-num_images = 5 #number of different galaxy images per augmented batch.
-n_epochs = 5
+num_images = 50 # number of different galaxy images per augmented batch
+## (For larger data)
+n_epochs = 13
 cn_model = networkc1
 optimizer = torch.optim.Adam(cn_model.parameters(), lr=2e-4)
 
@@ -50,7 +51,8 @@ cn_model.to('cpu') #Move network to GPU
 #-----------------------------------------------------
 #DEFINE TRAINING AND TESTING SETS:
 #Train and test set
-dataset_size = int(10/num_images)
+dataset_size = int(14034/num_images) 
+## Change '10' to 14034 for dataset_size because 14034 is the amount of galaxies being observed
 train_split = 0.85
 test_split = 1 - train_split
 split_cutoff = int(dataset_size*train_split)

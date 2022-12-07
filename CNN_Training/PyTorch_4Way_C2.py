@@ -30,7 +30,7 @@ from PyTorch_C2_net import networkc2
 
 num_classes = 4 #Number of classes for the model
 num_images = 5 #number of different galaxy images per augmented batch.
-n_epochs = 5
+n_epochs = 20
 cn_model = networkc2
 lr = 2*pow(10,-4)
 optimizer = torch.optim.Adam(cn_model.parameters(), lr=lr)
@@ -44,7 +44,7 @@ cn_model.to('cpu') #Change to 'cpu' to 'cuda' if running network on a GPU
 #-----------------------------------------------------
 #DEFINE TRAINING AND TESTING SETS:
 #Train and test set
-dataset_size = int(10/num_images)
+dataset_size = int(14034/num_images)
 train_split = 0.85
 test_split = 1 - train_split
 split_cutoff = int(dataset_size*train_split)
