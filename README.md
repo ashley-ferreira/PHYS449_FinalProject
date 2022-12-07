@@ -27,14 +27,14 @@ Many of these individual repository folders contain README's with more detailed 
 To run 4-way classification with PyTorch for C1 network, use
 
 ```sh
-! python PyTorch_4Way_C1.py 
+! python CNN_Training/PyTorch_4Way_C1.py 
 ```
 ## to train `C2`
 
 To run 4-way classification with PyTorch for C2 network, use
 
 ```sh
-! python PyTorch_4Way_C2.py 
+! python CNN_Training/PyTorch_4Way_C2.py 
 ```
 
 For PyTorch_4Way_C1.py and PyTorch_4Way_C2.py to work you need to download the "data_g_band_v2.txt" file in the following url
