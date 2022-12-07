@@ -15,14 +15,6 @@ tried to replicate the results from the above paper for their "C2" network and t
 
 The main work we did for this project is located in the  'notebooks' folder. It is what was used to train and test the models. They were ran using Google Collab using their computing resources. The PyTorch code has been adapted to run in python files provided in this repository.
 
-## Running `main.py`
-
-To run `main.py`, use
-
-```sh
-! python main.py data/filename.in data/filename.json
-```
-
 For PyTorch_4Way_C1.py and PyTorch_4Way_C2.py to work you need to download the "data_g_band_v2.txt" file in the following url
 
 https://drive.google.com/drive/folders/1HDShIZNj019MrpXwWl9I748xWLRmgJNl
@@ -31,5 +23,13 @@ Paste the "data_g_band_v2.txt" into the "Data" folder and you should be able to 
 
 run "python PyTorch_4Way_C1.py" to run 4-way classification with PyTorch for C1 network
 
+```sh
+! python PyTorch_4Way_C1.py
+```
+
 run "python PyTorch_4Way_C2.py" to run 4-way classification with PyTorch for C2 network
+
+```sh
+! python PyTorch_4Way_C2.py
+```
 
