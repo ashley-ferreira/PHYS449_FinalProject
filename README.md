@@ -1,14 +1,27 @@
-# PHYS449_FinalProject
-Replicating machine learning results from paper: https://academic.oup.com/mnras/article/506/1/659/6291200
+# PHYS 449 Final Project: Galaxy Morphology Classification with Machine Learning
 
-Link to final presenation: https://docs.google.com/presentation/d/1vw_8BbDLDMyIZf-GEiGgTHhTvtZi8xpYM10-5VsCY60/edit?usp=sharing
+## Contributors
+- Yusuf Ahmed (UWaterloo)
+- Alexander Caires (UWaterloo)
+- Jordan Ducatel (UWaterloo)
+- Ashley Ferreira (UWaterloo)
+- Guillaume Hewitt (UWaterloo)
 
-Development notes from Ashley:
+## Introduction
 
-In this Paper we tried to replicate the results from the above paper for their "C2" network and their old "C1" network using PyTorch and Keras. In the paper they had originally used Keras to run their neural networks. We decided to run the neural networks using PyTorch and Keras to compare the modules.
+Reproducing results from the 2D Convolutional Neural Networks C1 and C2 from "Morphological classification of galaxies with deep learning: comparing 3-way and 4-way CNNs" by Mitchell K. Cavanagh, Kenji Bekki and Brent A. Groves (https://academic.oup.com/mnras/article/506/1/659/6291200) and exploring their application to the Galaxy10 dataset.
 
-The main work we did for this project is located in the  'Notebooks' folder. It is what was used to train and test the models. They were ran using Google Collab using their computing resources. 
+tried to replicate the results from the above paper for their "C2" network and their old "C1" network using PyTorch and Keras. In the paper they had originally used Keras to run their neural networks. We decided to run the neural networks using PyTorch and Keras to compare the modules.
 
+The main work we did for this project is located in the  'notebooks' folder. It is what was used to train and test the models. They were ran using Google Collab using their computing resources. The PyTorch code has been adapted to run in python files provided in this repository.
+
+## Running `main.py`
+
+To run `main.py`, use
+
+```sh
+! python main.py data/filename.in data/filename.json
+```
 
 For PyTorch_4Way_C1.py and PyTorch_4Way_C2.py to work you need to download the "data_g_band_v2.txt" file in the following url
 

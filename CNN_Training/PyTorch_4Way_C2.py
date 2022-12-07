@@ -29,7 +29,7 @@ from PyTorch_C2_net import networkc2
 
 
 num_classes = 4 #Number of classes for the model
-num_images = 5 #number of different galaxy images per augmented batch.
+num_images = 150 #number of different galaxy images per augmented batch.
 n_epochs = 20
 cn_model = networkc2
 lr = 2*pow(10,-4)
