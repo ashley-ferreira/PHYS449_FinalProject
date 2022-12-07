@@ -9,7 +9,7 @@
 
 ## Introduction
 
-Reproducing results from the 2D Convolutional Neural Networks C1 and C2 from "Morphological classification of galaxies with deep learning: comparing 3-way and 4-way CNNs" by Mitchell K. Cavanagh, Kenji Bekki and Brent A. Groves (https://academic.oup.com/mnras/article/506/1/659/6291200) and exploring their application to the Galaxy10 dataset.
+This repository reproduces the results from the 2D Convolutional Neural Networks *C1* and *C2* denoted from "Morphological classification of galaxies with deep learning: comparing 3-way and 4-way CNNs" by Mitchell K. Cavanagh, Kenji Bekki and Brent A. Groves (https://academic.oup.com/mnras/article/506/1/659/6291200), as well as further exploring their application through the use of the Galaxy10 SDSS dataset.
 
 The results of Cavanagh *et al*. are replicated in this repository for the new "C2" network introduced in the paper, and their old "C1" network they used previously, using both PyTorch and Keras for each. Cavanagh *et al*. had originally used Keras to run their neural networks. This repository runs both neural networks using PyTorch and Keras, in order to compare the models further.
 
