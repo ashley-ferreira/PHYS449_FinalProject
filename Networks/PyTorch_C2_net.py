@@ -4,7 +4,6 @@ from torch import nn
 #DEFINE VARIABLES USED IN THE CODE:
 num_classes = 4 #Number of classes for the model
 num_images = 150 #number of different galaxy images per augmented batch.
-network_to_train = 'C2' #selected model architecture to train
 #-----------------------------------------------------
 
 networkc2 = nn.Sequential(
