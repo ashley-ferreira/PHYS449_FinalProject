@@ -10,7 +10,7 @@ import torch
 ##drive.mount('/content/drive')
 
 #LOAD THE DATA FROM TXT FILE INTO A BATCH:
-def data_batch(datafile_index, num_images=10,  data_file='PHYS449_FinalProject/Data/data_g_band_v2.txt', plotting=False):
+def data_batch(datafile_index, num_images=10,  data_file='Data/data_g_band_v2.txt', plotting=False):
     '''
     Description:
         Access datafile.txt, each row is flattened 110x110 image + 1 label string (E, Sp, S0, Irr+Misc).
